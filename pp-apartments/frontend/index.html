@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>P&P Apartments - Luxury Shortlets in Auchi</title>
+    <link rel="stylesheet" href="styles_modern.css">
+</head>
+<body>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#home" class="logo">
+                <img src="../images/logo.PNG" alt="P&P Apartments Logo" class="logo-img">
+            </a>
+            <button class="menu-toggle" id="menuToggle" title="Menu">☰</button>
+            <nav class="nav" id="navMenu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#apartments" class="nav-link">Apartments</a>
+                <a href="#experiences" class="nav-link">Experiences</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero" style="background-image: url('../images/IMG_8456.jpg'); background-size: cover; background-position: center;">
+        <div class="hero-overlay hero-gradient"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Luxury Stays in Auchi</h1>
+                <p>Premium comfort, impeccable service</p>
+            </div>
+            <div class="search-card">
+                <div class="search-wrapper">
+                    <!-- WHERE FIELD -->
+                    <button class="search-field where-field" id="whereBtn">
+                        <div class="field-label">Where</div>
+                        <div class="field-value">Search destinations</div>
+                    </button>
+
+                    <!-- WHEN FIELD (Check-in & Check-out Combined) -->
+                    <button class="search-field when-field" id="whenBtn">
+                        <div class="field-label">When</div>
+                        <div class="field-value">Add dates</div>
+                    </button>
+
+                    <!-- WHO FIELD (Guests) -->
+                    <button class="search-field who-field" id="whoBtn">
+                        <div class="field-label">Who</div>
+                        <div class="field-value">Add guests</div>
+                    </button>
+
+                    <!-- SEARCH BUTTON -->
+                    <button class="btn btn-search-premium" id="searchBtn">
+                        🔍
+                    </button>
+                </div>
+
+                <!-- Hidden form for actual data submission -->
+                <input type="text" id="whereInput" value="Auchi" style="display:none;">
+                <input type="date" id="checkinInput" style="display:none;">
+                <input type="date" id="checkoutInput" style="display:none;">
+                <select id="guestsInput" style="display:none;">
+                    <option>1 guest</option>
+                    <option>2 guests</option>
+                    <option>3 guests</option>
+                    <option>4+ guests</option>
+                </select>
+                
+                <!-- WHERE MODAL -->
+                <div class="search-modal" id="whereModal">
+                    <div class="modal-overlay" onclick="closeSearchModal('whereModal')"></div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Where are you staying?</h3>
+                            <button class="modal-close" onclick="closeSearchModal('whereModal')">✕</button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" id="whereSearchInput" placeholder="City or area" class="modal-input">
+                            <div class="location-list">
+                                <button class="location-item" onclick="setLocation('Auchi, Edo State')">Auchi, Edo State</button>
+                                <button class="location-item" onclick="setLocation('Benin City')">Benin City</button>
+                                <button class="location-item" onclick="setLocation('Ekpoma')">Ekpoma</button>
+                                <button class="location-item" onclick="setLocation('Irrua')">Irrua</button>
+                                <button class="location-item" onclick="setLocation('Unguwan Rimi')">Unguwan Rimi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHECK-IN & CHECK-OUT DATE MODAL (COMBINED) -->
+                <div class="search-modal" id="whenModal">
+                    <div class="modal-overlay" onclick="closeSearchModal('whenModal')"></div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>When are you staying?</h3>
+                            <button class="modal-close" onclick="closeSearchModal('whenModal')">✕</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="date-range-container">
+                                <div class="date-input-group">
+                                    <label>Check-in</label>
+                                    <input type="date" id="checkinDatePicker" class="modal-date-input">
+                                </div>
+                                <div class="date-input-group">
+                                    <label>Check-out</label>
+                                    <input type="date" id="checkoutDatePicker" class="modal-date-input">
+                                </div>
+                            </div>
+                            <button class="modal-confirm-btn" onclick="setDates()">Done</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GUESTS MODAL -->
+                <div class="search-modal" id="whoModal">
+                    <div class="modal-overlay" onclick="closeSearchModal('whoModal')"></div>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Who's coming?</h3>
+                            <button class="modal-close" onclick="closeSearchModal('whoModal')">✕</button>
+                        </div>
+                        <div class="modal-body guests-selector">
+                            <div class="guest-option">
+                                <span>Adults</span>
+                                <div class="guest-counter">
+                                    <button onclick="decreaseGuests('adults')">−</button>
+                                    <span id="adultsCount">1</span>
+                                    <button onclick="increaseGuests('adults')">+</button>
+                                </div>
+                            </div>
+                            <div class="guest-option">
+                                <span>Children</span>
+                                <div class="guest-counter">
+                                    <button onclick="decreaseGuests('children')">−</button>
+                                    <span id="childrenCount">0</span>
+                                    <button onclick="increaseGuests('children')">+</button>
+                                </div>
+                            </div>
+                            <button class="modal-confirm-btn" onclick="setGuestCount()">Done</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tooltip tooltip-search">
+                    <div class="tooltip-arrow"></div>
+                    <p class="tooltip-title">✨ Luxury Awaits</p>
+                    <p class="tooltip-text">Experience premium luxury in Edo North. All amenities & service fees included in one transparent price.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APARTMENTS SECTION -->
+    <section id="apartments" class="apartments-section">
+        <div class="container">
+            <h2 class="section-title">Our Apartments</h2>
+            <div class="apartments-grid">
+                <!-- CLASSIC 1 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8410.JPG" alt="Classic Suite - Modern Bedroom">
+                        <div class="card-badge">Classic</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Classic Suite</h3>
+                            <div class="apt-rating">★ 4.8 (89)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Comfortable & modern with essential amenities</p>
+                        <div class="apt-price">₦5,000 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- PRESTIGE 1 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8441.jpg" alt="Prestige Studio - Living Room">
+                        <div class="card-badge prestige">Prestige</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Prestige Studio</h3>
+                            <div class="apt-rating">★ 4.9 (142)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Premium furnishings with luxury features</p>
+                        <div class="apt-price">₦6,500 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- GOLDEN 1 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8456.jpg" alt="Golden Penthouse - Luxury Suite">
+                        <div class="card-badge golden">Golden</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Golden Penthouse</h3>
+                            <div class="apt-rating">★ 5.0 (201)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Exquisite luxury with full concierge service</p>
+                        <div class="apt-price">₦8,500 <span>per night</span></div>
+                    </div>
+                    <div class="card-tooltip">
+                        <div class="tooltip-arrow"></div>
+                        <p class="tooltip-title">👑 Premium Experience</p>
+                        <p class="tooltip-text">Immerse yourself in luxury. Concierge available 24/7.</p>
+                    </div>
+                </div>
+
+                <!-- PRESTIGE 2 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8439.jpg" alt="Prestige Deluxe - Spacious Room">
+                        <div class="card-badge prestige">Prestige</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Prestige Deluxe</h3>
+                            <div class="apt-rating">★ 4.8 (125)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Spacious rooms with premium amenities</p>
+                        <div class="apt-price">₦6,800 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- CLASSIC 2 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8449.jpg" alt="Classic Comfort - Bedroom View">
+                        <div class="card-badge">Classic</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Classic Comfort</h3>
+                            <div class="apt-rating">★ 4.6 (73)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Cozy space with modern furnishings</p>
+                        <div class="apt-price">₦5,200 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- GOLDEN 2 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8453.jpg" alt="Golden Elite - Luxury Design">
+                        <div class="card-badge golden">Golden</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Golden Elite Suite</h3>
+                            <div class="apt-rating">★ 4.9 (198)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Elite living with premium amenities & views</p>
+                        <div class="apt-price">₦8,200 <span>per night</span></div>
+                    </div>
+                    <div class="card-tooltip">
+                        <div class="tooltip-arrow"></div>
+                        <p class="tooltip-title">✨ Elite Luxury</p>
+                        <p class="tooltip-text">Experience Edo North finest accommodations with world-class amenities.</p>
+                    </div>
+                </div>
+
+                <!-- CLASSIC 3 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8411.JPG" alt="Classic Plus - Bright Spaces">
+                        <div class="card-badge">Classic</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Classic Plus</h3>
+                            <div class="apt-rating">★ 4.7 (94)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Bright spaces with quality furnishings</p>
+                        <div class="apt-price">₦5,100 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- PRESTIGE 3 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8451.jpg" alt="Prestige Premium - Elegant Interior">
+                        <div class="card-badge prestige">Prestige</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Prestige Premium</h3>
+                            <div class="apt-rating">★ 4.8 (158)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Elegant design with premium finishes</p>
+                        <div class="apt-price">₦6,700 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- GOLDEN 3 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8460.jpg" alt="Golden Royale - Premium Living">
+                        <div class="card-badge golden">Golden</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Golden Royale</h3>
+                            <div class="apt-rating">★ 5.0 (187)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Royal treatment with ultimate luxury</p>
+                        <div class="apt-price">₦8,700 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- CLASSIC 4 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/IMG_8409.JPG" alt="Classic Essentials - Cozy Room">
+                        <div class="card-badge">Classic</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Classic Essentials</h3>
+                            <div class="apt-rating">★ 4.5 (62)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Affordable comfort with great amenities</p>
+                        <div class="apt-price">₦4,800 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- PRESTIGE 4 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/MVI_9784.MOV.23_16_33_23.Still001.JPG" alt="Prestige Luxe - Modern Design">
+                        <div class="card-badge prestige">Prestige</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Prestige Luxe</h3>
+                            <div class="apt-rating">★ 4.9 (168)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Contemporary luxury with stylish decor</p>
+                        <div class="apt-price">₦6,900 <span>per night</span></div>
+                    </div>
+                </div>
+
+                <!-- GOLDEN 4 -->
+                <div class="apartment-card">
+                    <div class="apartment-image">
+                        <img src="../images/MVI_9797.MOV.23_26_28_21.Still001.JPG" alt="Golden Supreme - Opulent Suite">
+                        <div class="card-badge golden">Golden</div>
+                        <button class="card-heart" title="Add to favorites">♡</button>
+                    </div>
+                    <div class="apartment-info">
+                        <div class="apt-header">
+                            <h3>Golden Supreme</h3>
+                            <div class="apt-rating">★ 5.0 (211)</div>
+                        </div>
+                        <p class="apt-location">Auchi, Edo State</p>
+                        <p class="apt-desc">Supremely elegant with world-class service</p>
+                        <div class="apt-price">₦8,900 <span>per night</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose P&P Apartments</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h4>24/7 Power</h4>
+                    <p>Uninterrupted electricity supply</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h4>Security</h4>
+                    <p>24/7 security monitoring</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📡</div>
+                    <h4>High-Speed WiFi</h4>
+                    <p>Ultra-fast internet connection</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🍳</div>
+                    <h4>Fully Equipped Kitchen</h4>
+                    <p>Modern appliances included</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📺</div>
+                    <h4>Smart TV</h4>
+                    <p>Connected entertainment systems</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">❄️</div>
+                    <h4>Air Conditioning</h4>
+                    <p>Climate control throughout</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GUEST EXPERIENCES SECTION -->
+    <section id="experiences" class="experiences-section">
+        <div class="container">
+            <h2 class="section-title">Guest Experiences</h2>
+            
+            <div class="experience-upload">
+                <h3>Share Your Experience</h3>
+                <form id="experienceForm">
+                    <div class="form-group">
+                        <label for="guestName">Your Name (optional)</label>
+                        <input type="text" id="guestName" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestText">Your Experience</label>
+                        <textarea id="guestText" placeholder="Tell us about your stay..." rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="guestImage">Upload Image (optional)</label>
+                        <input type="file" id="guestImage" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Share Experience</button>
+                </form>
+            </div>
+
+            <div id="experiencesGrid" class="experiences-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Details</h3>
+                    <p><strong>Phone:</strong><br>
+                    <a href="tel:+2348057302136">+234 805 730 2136</a><br>
+                    <a href="tel:+2348159153290">+234 815 915 3290</a></p>
+                    <p><strong>Location:</strong><br>
+                    Behind Abu-Inumoru House, GRA<br>
+                    Auchi, Edo State, Nigeria</p>
+                    <a href="https://wa.me/2348057302136" class="btn btn-primary" target="_blank">WhatsApp Us</a>
+                </div>
+                <div class="contact-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.8370229898947!2d6.139999!3d6.777777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9c9c9c9c9c9d%3A0x1d1d1d1d1d1d1d1d!2sAuchi%2C%20Edo%20State!5e0!3m2!1sen!2sng!4v1234567890" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 P&P Apartments. All rights reserved.</p>
+            <p>Follow us: <a href="https://instagram.com/pandp_apartment" target="_blank">@pandp_apartment</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
