@@ -206,9 +206,6 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     `;
     document.head.appendChild(style);
 }
-// Observe feature and testimonial cards
-const observableElements = document.querySelectorAll('.feature-premium-card, .review-card, .stat-card, .apt-card');
-observableElements.forEach(el => observer.observe(el));
 
 // UTILITY: Log console message
 console.log('%c🏠 Welcome to P&P Apartments', 'color: #d4af37; font-size: 16px; font-weight: bold;');
